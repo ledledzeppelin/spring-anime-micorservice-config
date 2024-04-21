@@ -1,25 +1,14 @@
-zuul:
-  prefix: /api
-  ignoredServices: '*'
-  routes:
-    test-service: /vet/**
-   
-server:
-  port: 8080
-  compression:
-    enabled: true
-    mime-types: application/json,text/css,application/javascript
-    min-response-size: 2048
-
-# Internationalization
-spring.messages.basename: messages/messages
-
----
 spring:
   config:
     activate:
-      on-profile: docker
-eureka:
+      on-profile: default
+
+server:
+  port: 8080
+  eureka:
+   instance:
+    # enable to register multiple app instances with a random server port
+    instance-id: ${spring.application.name}:${random.uuid}
   client:
     serviceUrl:
       defaultZone: http://discovery-server:8761/eureka/
